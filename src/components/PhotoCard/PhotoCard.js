@@ -4,6 +4,7 @@ import { ImgWrapper, Img, Button, Article } from "./styles";
 import { useLocalStorage } from "../../hooks/useLocalStorage";
 import FavButton from "../FavButton/FavButton";
 import { ToogleLikeMutation } from "../../containers/ToogleLikeMutation";
+import { Link } from "@reach/router";
 
 export const PhotoCard = ({ id, likes = 0, src }) => {
   const element = useRef(null);
@@ -46,11 +47,11 @@ export const PhotoCard = ({ id, likes = 0, src }) => {
     <Article ref={element}>
       {show && (
         <Fragment>
-          <a href={`/?detail=${id}`}>
+          <Link to={`/detail/${id}`}>
             <ImgWrapper>
               <Img src={src} />
             </ImgWrapper>
-          </a>
+          </Link>
 
           <FavButton liked={liked} likes={likes} onClick={handleFavClick} />
         </Fragment>
