@@ -48,7 +48,7 @@ export const ListOfCategories = () => {
           categories.map((item) => {
             return (
               <Item key={item.id}>
-                <Category {...item} />
+                <Category {...item} path={`/pet/${item.id}`} />
               </Item>
             );
           })
