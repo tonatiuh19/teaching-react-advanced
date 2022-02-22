@@ -1,6 +1,5 @@
 import React from "react";
 import { gql, useMutation } from "@apollo/client";
-import react from "react";
 
 const REGISTER = gql`
   mutation signup($input: UserCredentials!) {
@@ -9,7 +8,8 @@ const REGISTER = gql`
 `;
 
 export const useRegisterMutation = () => {
-  const [registerMutation] = useMutation(REGISTER);
+  const [registerMutation, { loading: mutationLoading, error: mutationError }] =
+    useMutation(REGISTER);
 
-  return { registerMutation };
+  return { registerMutation, mutationLoading, mutationError };
 };
