@@ -10,7 +10,7 @@ const App = () => {
       <GlobalStyle />
       <Logo />
       <ListOfCategories />
-      <ListOfPhotoCards />
+      <ListOfPhotoCards categoryId={1} />
     </div>
   );
 };
