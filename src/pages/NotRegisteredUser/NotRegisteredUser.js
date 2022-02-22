@@ -1,4 +1,5 @@
-import React from "react";
+import React, { Fragment } from "react";
+import UserForm from "../../components/UserForm/UserForm";
 import Context from "../../Context";
 
 const NotRegisteredUser = () => {
@@ -6,9 +7,10 @@ const NotRegisteredUser = () => {
     <Context.Consumer>
       {({ isAuth, activateAuth }) => {
         return (
-          <form onSubmit={activateAuth}>
-            <button>Iniciar Sesion</button>
-          </form>
+          <Fragment>
+            <UserForm onSubmit={activateAuth} title={"Log In"} />
+            <UserForm onSubmit={activateAuth} title={"Sign Up"} />
+          </Fragment>
         );
       }}
     </Context.Consumer>
