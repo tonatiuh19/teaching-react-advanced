@@ -6,10 +6,15 @@ const UserForm = ({ onSubmit, title }) => {
   const email = useInputValue("");
   const password = useInputValue("");
 
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    onSubmit({ email: email.value, password: password.value });
+  };
+
   return (
     <Fragment>
       <Title>{title}</Title>
-      <Form onSubmit={onSubmit}>
+      <Form onSubmit={handleSubmit}>
         <Input
           placeholder="Email"
           value={email.value}
