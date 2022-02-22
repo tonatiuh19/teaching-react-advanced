@@ -1,10 +1,13 @@
 import React, { Fragment, useEffect, useRef, useState } from "react";
 import { ImgWrapper, Img, Button, Article } from "./styles";
-import { MdFavoriteBorder } from "react-icons/md";
+import { MdFavoriteBorder, MdFavorite } from "react-icons/md";
+import { useLocalStorage } from "../../hooks/useLocalStorage";
 
 export const PhotoCard = ({ id, likes = 0, src }) => {
   const element = useRef(null);
   const [show, setShow] = useState(false);
+  const key = `like-${id}`;
+  const [liked, setLiked] = useLocalStorage(key, false);
 
   useEffect(
     function () {
@@ -26,6 +29,8 @@ export const PhotoCard = ({ id, likes = 0, src }) => {
     [element]
   );
 
+  const Icon = liked ? MdFavorite : MdFavoriteBorder;
+
   return (
     <Article ref={element}>
       {show && (
@@ -36,8 +41,8 @@ export const PhotoCard = ({ id, likes = 0, src }) => {
             </ImgWrapper>
           </a>
 
-          <Button>
-            <MdFavoriteBorder size="32px" /> {likes} likes!
+          <Button onClick={() => setLiked(!liked)}>
+            <Icon size="32px" /> {likes} likes!
           </Button>
         </Fragment>
       )}
