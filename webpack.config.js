@@ -25,7 +25,7 @@ module.exports = {
         },
       ],
     }),
-    new WorkboxPlugin.GenerateSW({
+    new WorkboxWebpackPlugin.GenerateSW({
       swDest: "service-worker.js",
       clientsClaim: true,
       skipWaiting: true,
