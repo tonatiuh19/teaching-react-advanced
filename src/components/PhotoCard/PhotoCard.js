@@ -1,17 +1,14 @@
 import React, { Fragment, useEffect, useRef, useState } from "react";
 import { ImgWrapper, Img, Button, Article } from "./styles";
 
-import { useLocalStorage } from "../../hooks/useLocalStorage";
 import FavButton from "../FavButton/FavButton";
 import { ToogleLikeMutation } from "../../containers/ToogleLikeMutation";
 import { Link } from "@reach/router";
 
-export const PhotoCard = ({ id, likes = 0, src }) => {
+export const PhotoCard = ({ id, liked, likes = 0, src }) => {
   const element = useRef(null);
   const [show, setShow] = useState(false);
   const { mutation, mutationLoading, mutationError } = ToogleLikeMutation();
-  const key = `like-${id}`;
-  const [liked, setLiked] = useLocalStorage(key, false);
 
   useEffect(
     function () {
@@ -34,13 +31,11 @@ export const PhotoCard = ({ id, likes = 0, src }) => {
   );
 
   const handleFavClick = () => {
-    !liked &&
-      mutation({
-        variables: {
-          input: { id },
-        },
-      });
-    setLiked(!liked);
+    mutation({
+      variables: {
+        input: { id },
+      },
+    });
   };
 
   return (
