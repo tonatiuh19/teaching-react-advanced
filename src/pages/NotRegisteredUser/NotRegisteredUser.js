@@ -1,12 +1,17 @@
 import React, { Fragment, useState } from "react";
 import UserForm from "../../components/UserForm/UserForm";
+import { useLoginMutation } from "../../containers/LoginMutation";
 import { useRegisterMutation } from "../../containers/RegisterMutation";
 import Context from "../../Context";
 
 const NotRegisteredUser = () => {
   const { registerMutation } = useRegisterMutation();
-  const [loading, setLoading] = useState(false);
-  const [error, setError] = useState(false);
+  const { loginMutation } = useLoginMutation();
+  const [loadingSignUp, setLoadingSignUp] = useState(false);
+  const [errorSignUp, setErrorSignUp] = useState(false);
+
+  const [loadingLogIn, setLoadingLogIn] = useState(false);
+  const [errorLogIn, setErrorLogIn] = useState(false);
 
   return (
     <Context.Consumer>
@@ -14,28 +19,51 @@ const NotRegisteredUser = () => {
         const onSubmit = ({ email, password }) => {
           const input = { email, password };
           const variables = { input };
-          setLoading(true);
+          setLoadingSignUp(true);
           registerMutation({ variables })
             .then(() => {
               activateAuth();
-              setLoading(false);
-              setError(false);
+              setLoadingSignUp(false);
+              setErrorSignUp(false);
             })
             .catch((e) => {
-              setLoading(false);
-              setError(true);
+              setLoadingSignUp(false);
+              setErrorSignUp(true);
+            });
+        };
+
+        const onLogin = ({ email, password }) => {
+          const input = { email, password };
+          const variables = { input };
+          setLoadingLogIn(true);
+          loginMutation({ variables })
+            .then(() => {
+              activateAuth();
+              setLoadingLogIn(false);
+              setErrorLogIn(false);
+            })
+            .catch((e) => {
+              console.log(e);
+              setLoadingLogIn(false);
+              setErrorLogIn(true);
             });
         };
 
         return (
           <Fragment>
-            <UserForm onSubmit={activateAuth} title={"Log In"} />
+            <UserForm
+              onSubmit={onLogin}
+              title={"Log In"}
+              disabled={loadingLogIn}
+              errorMessage={"Invalid Credentials."}
+              error={errorLogIn}
+            />
             <UserForm
               onSubmit={onSubmit}
               title={"Sign Up"}
-              disabled={loading}
+              disabled={loadingSignUp}
               errorMessage={"The user already exists."}
-              error={error}
+              error={errorSignUp}
             />
           </Fragment>
         );

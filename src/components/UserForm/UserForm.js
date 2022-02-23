@@ -6,8 +6,6 @@ const UserForm = ({ onSubmit, title, error, errorMessage, disabled }) => {
   const email = useInputValue("");
   const password = useInputValue("");
 
-  console.log(disabled);
-
   const handleSubmit = (e) => {
     e.preventDefault();
     onSubmit({ email: email.value, password: password.value });
