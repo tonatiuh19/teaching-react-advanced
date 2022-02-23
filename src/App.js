@@ -1,21 +1,23 @@
 import { Redirect, Router } from "@reach/router";
-import React, { useContext } from "react";
+import React, { Suspense, useContext } from "react";
 import { Logo } from "./components/Logo/Logo";
 import NavBar from "./components/NavBar/NavBar";
 import { Context } from "./Context";
 import Detail from "./pages/Detail/Detail";
-import Favs from "./pages/Favs/Favs";
+//import Favs from "./pages/Favs/Favs";
 import Home from "./pages/Home/Home";
 import NotFound from "./pages/NotFound/NotFound";
 import NotRegisteredUser from "./pages/NotRegisteredUser/NotRegisteredUser";
 import User from "./pages/User/User";
 import { GlobalStyle } from "./styles/GlobalStyle";
 
+const Favs = React.lazy(() => import("./pages/Favs/Favs"));
+
 const App = () => {
   const { isAuth } = useContext(Context);
 
   return (
-    <div>
+    <Suspense fallback={<div />}>
       <GlobalStyle />
       <Logo />
       <Router>
@@ -31,7 +33,7 @@ const App = () => {
         <User path="/user" />
       </Router>
       <NavBar />
-    </div>
+    </Suspense>
   );
 };
 
